@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Web server Java Core sử dụng java.net, không cần framework.">
+  <title>WebCore — Java từ nền tảng</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="container header">
+    <a class="brand" href="/" aria-label="WebCore trang chủ"><span class="logo">W<span>.</span></span> WebCore</a>
+    <nav aria-label="Điều hướng chính"><a href="#architecture">Cách hoạt động</a><a href="#playground">Thử API <span>↗</span></a></nav>
+  </header>
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow"><span class="dot"></span> JAVA CORE · JAVA.NET</p>
+        <h1>Một website.<br>Từ những dòng<br><span>Java thuần.</span></h1>
+        <p class="intro">Bắt đầu từ một kết nối TCP, tự tay xử lý HTTP và đưa trang web lên trình duyệt. Khám phá cách web hoạt động ngay từ nền tảng.</p>
+        <a class="button" href="#playground">Khám phá ngay <span>↗</span></a>
+        <p class="caption">Không framework. Không thư viện bên ngoài.</p>
+      </div>
+      <div class="terminal" aria-label="Ví dụ luồng xử lý Java">
+        <div class="terminal-bar"><span class="lights">● ● ●</span><span>HttpServer.java</span><span>JAVA</span></div>
+        <pre><code><span class="comment">// Mọi kết nối bắt đầu ở đây.</span>
+<span class="purple">try</span> (ServerSocket server =
+    <span class="purple">new</span> ServerSocket(<span class="orange">8080</span>)) {
+
+  <span class="purple">while</span> (<span class="orange">true</span>) {
+    Socket client = server.accept();
+
+    <span class="comment">// Đọc request, gửi response.</span>
+    handle(client);
+  }
+}</code></pre>
+        <div class="terminal-footer"><span class="dot"></span><span>TCP → HTTP → HTML</span><span>localhost:8080</span></div>
+      </div>
+    </section>
+    <section class="facts" aria-label="Thông tin dự án">
+      <div><strong>100%</strong><span>Java thuần</span></div><div><strong>0</strong><span>Framework</span></div><div><strong>HTTP/1.1</strong><span>Giao thức kết nối</span></div><div><strong id="server-state">Đang kiểm tra…</strong><span id="server-detail" role="status">Trạng thái server</span></div>
+    </section>
+    <section id="architecture" class="architecture">
+      <p class="eyebrow">TỪ REQUEST ĐẾN RESPONSE</p>
+      <h2>Hiểu từng bước kết nối.</h2>
+      <div class="cards">
+        <article><span class="step">01 / KẾT NỐI</span><h3>Nhận request</h3><p><code>ServerSocket</code> lắng nghe tại cổng 8080. Mỗi kết nối được chuyển cho một luồng xử lý.</p></article>
+        <article><span class="step">02 / XỬ LÝ</span><h3>Đọc & định tuyến</h3><p>Đọc phương thức, đường dẫn, header và body để tìm file tĩnh hoặc API phù hợp.</p></article>
+        <article><span class="step">03 / PHẢN HỒI</span><h3>Trả về trình duyệt</h3><p>Gửi status code, header và nội dung HTML, CSS, JavaScript hoặc JSON qua <code>Socket</code>.</p></article>
+      </div>
+    </section>
+    <section id="playground" class="playground">
+      <div><p class="eyebrow">API PLAYGROUND</p><h2>Gửi một lời chào.<br>Nhận phản hồi thật.</h2><p>Nhập nội dung để thử API echo. Java server sẽ nhận dữ liệu UTF-8 và trả về JSON ngay tại đây.</p><span class="endpoint"><b>POST</b> /api/echo</span></div>
+      <form id="echo-form">
+        <label for="message">Nội dung gửi đến server</label>
+        <textarea id="message" maxlength="4000" required rows="3" placeholder="Xin chào, Java Core!">Xin chào, Java Core!</textarea>
+        <button class="button" type="submit">Gửi request <span>→</span></button>
+        <div class="response-title">RESPONSE <span id="request-state" role="status">Sẵn sàng</span></div>
+        <pre id="response" aria-live="polite">Kết quả sẽ xuất hiện ở đây.</pre>
+      </form>
+    </section>
+  </main>
+  <footer class="container"><a class="brand" href="/">WebCore<span class="green">.</span></a><span>Được xây dựng bằng Java Core & một chút tò mò.</span><a href="#">Về đầu trang ↑</a></footer>
+</body>
+</html>
